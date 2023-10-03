@@ -33,7 +33,7 @@ pipeline {
 					Column6 = userInput.Column6?:''
 
                     // Echo to console
-                    echo -e "Column1: ${Column1} \n Column2: ${Column2} \n Column3: ${Column3} \n Comment: ${Comment} \n Column6: ${Column6}"
+                    echo -e "Column1: ${Column1} \n Column2: ${Column2} \n Column3: ${Column3} \n Comment: ${Comment} \n Column6: ${Column6}";
                 }
             }
         }
