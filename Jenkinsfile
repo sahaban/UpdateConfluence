@@ -18,17 +18,12 @@ pipeline {
                     // Get the input
                     def userInput = input(
                             id: 'userInput', message: 'Enter the values:?',
-                            parameters: [ string(defaultValue: 'None',
-                                            description: 'Column1',
-                                            name: 'Column1'), string(defaultValue: 'None',
-                                            description: 'Column2',
-                                            name: 'Column2'), string(defaultValue: 'None',
-                                            description: 'Column2',
-                                            name: 'Column2'), string(defaultValue: 'None',
-                                            description: 'Comment',
-                                            name: 'Comment'), string(defaultValue: 'None',
-                                            description: 'Column6',
-                                            name: 'Column6') ] )
+                            parameters: [
+							string(defaultValue: 'None', description: 'Column1', name: 'Column1'),
+							string(defaultValue: 'None', description: 'Column2', name: 'Column2'), 
+							string(defaultValue: 'None', description: 'Column2', name: 'Column2'),
+							string(defaultValue: 'None', description: 'Comment', name: 'Comment'),
+							string(defaultValue: 'None', description: 'Column6', name: 'Column6') ] )
 
                     // Save to variables. Default to empty string if not found.
                     Column1 = userInput.Column1?:''
@@ -38,7 +33,7 @@ pipeline {
 					Column6 = userInput.Column6?:''
 
                     // Echo to console
-                    echo("Column1: ${Column1}" \n "Column2: ${Column2}" \n "Column3: ${Column3}" \n "Comment: ${Comment}" \n "Column6: ${Column6}")
+                    echo -e "Column1: ${Column1} \n Column2: ${Column2} \n Column3: ${Column3} \n Comment: ${Comment} \n Column6: ${Column6}"
                 }
             }
         }
