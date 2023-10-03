@@ -21,7 +21,7 @@ pipeline {
                             parameters: [
 							string(defaultValue: 'None', description: 'Column1', name: 'Column1'),
 							string(defaultValue: 'None', description: 'Column2', name: 'Column2'), 
-							string(defaultValue: 'None', description: 'Column2', name: 'Column2'),
+							string(defaultValue: 'None', description: 'Column3', name: 'Column3'),
 							string(defaultValue: 'None', description: 'Comment', name: 'Comment'),
 							string(defaultValue: 'None', description: 'Column6', name: 'Column6') ] )
 
