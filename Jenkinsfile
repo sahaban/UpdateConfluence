@@ -7,20 +7,6 @@ pipeline {
         stage("Interactive_Input") {
             steps {
                 script {
-
-                    // Variables for input
-                    def releaseNumber
-					def requestType
-					def requestLink
-					def artifactUrl
-					def envName
-					def Comment
-					def prodDeployment
-					def preprodDeployment
-					def icatDeployment
-					buildTriggerredBy = currentBuild.getBuildCauses()[0].userId + "-" + currentBuild.getBuildCauses()[0].userName
-					//def timeStamp = String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())
-
                     // Get the input
                     def userInput = input(
                             id: 'userInput', message: 'Enter the values:?',
@@ -67,10 +53,13 @@ pipeline {
 				prodDeployment="'''+prodDeployment+'''"
 				preprodDeployment="'''+preprodDeployment+'''"
 				icatDeployment="'''+icatDeployment+'''"
-				timeStamp = `TZ=":Asia/Kolkata" date "+%H"%M, %d %b %Y (%:z)"`
+				timeStamp=$(date)
 				newRow="<tr><td>$releaseNumber</td><td>$requestType</td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td><td>$requestLink</td><td>$artifactUrl</td></tr></tbody></table>"
-				echo $newRow
+				#echo $newRow
+				chmod 755 updateconfluence.sh
+				bash updateconfluence.sh "$newRow"
 				'''
+				
 			}
 		} 
     }
