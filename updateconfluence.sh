@@ -1,7 +1,7 @@
 #!/bin/bash
 
 confluenceUser="emv52697@zslsz.com"
-confluencePass=":ATATT3xFfGF0tcjYKcj1BzqTH68_mopLKmo8N710lpWKQGpI-WPBBp8pPUkOp3gvANo-gYAbFUeW9ISmq1FXYZfPH23AvQ7YIgrSOmdUKPR_B6sWB36qvbZA2Jk8oOrXkmeWrsL8GcS5qt2LuID8S1ScdK3zg-0j31VHVXx1FVVxODnzCLdhWnA=3634A4ED"
+confluencePass="ATATT3xFfGF0XVAIQxYy3gPHll5cr1hb0NhsemeKLYXKgr1e30vQkXKCWnI9CU8vxkQc1tCuTiLL8bXnmnus6jdOa5CGKpdx7iKQ36ek9Q1tifrbqRPzE9LPs6r71Sks2VmQ8v-UOm0K-NAOVoSqhA95zwsP4_rrZU3zN59fry9xqn4ywhMJKPA=32A1FB33"
 
 #get current whole page content from confluence
 currentContent=`curl -s -u ${confluenceUser}:${confluencePass} -X GET https://blackiron629.atlassian.net/wiki/rest/api/content/33118?expand=body.storage | python3 -c "import sys, json; print json.load(sys.stdin)['body']['storage']['value']"`
@@ -20,4 +20,4 @@ pageVersion=`curl -s -u ${confluenceUser}:${confluencePass} -X GET https://black
 echo "pageVersion: ${pageVersion}"
 
 #Update the page with new table  row
-curl -s -u ${confluenceUser}:${confluencePass} -X PUT -H 'Content-Type: application/json' -d '{"id":"1396984912","type":"page","title":"Jenkins_to_Confluence1","body":{"storage":{"value":"'"${newContent//\"/\\\"}"'","representation":"storage"}},"version":{"number":'"${pageVersion}"'}}' https://blackiron629.atlassian.net/wiki/rest/api/content/33118
+curl -s -u ${confluenceUser}:${confluencePass} -X PUT -H 'Content-Type: application/json' -d '{"id":"33118","type":"page","title":"Test Page","body":{"storage":{"value":"'"${newContent//\"/\\\"}"'","representation":"storage"}},"version":{"number":'"${pageVersion}"'}}' https://blackiron629.atlassian.net/wiki/rest/api/content/33118
