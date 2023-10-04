@@ -56,20 +56,8 @@ pipeline {
 		
 		stage(Update_Confluence) {
 			steps {
-				sh '''
-					releaseNumber="'''+releaseNumber+'''"
-					requestType="'''+requestType+'''"
-					requestLink="'''+requestLink+'''"
-					artifactUrl="'''+artifactUrl+'''"
-					envName="'''+envName+'''"
-					Comment="'''+Comment+'''"
-					prodDeployment="'''+prodDeployment+'''"
-					preprodDeployment="'''+preprodDeployment+'''"
-					icatDeployment="'''+icatDeployment+'''"
-					timeStamp = `TZ=":Asia/Kolkata" date "+%H"%M, %d %b %Y (%:z)"`
-					echo $releaseNumber
-					#newRow="<tr><td>$releaseNumber</td><td>$requestType</td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td><td>$requestLink</td><td>$artifactUrl</td></tr></tbody></table>"
-					#echo $newRow
+				sh "echo $releaseNumber"
+				sh '''				newRow="<tr><td>$releaseNumber</td><td>$requestType</td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td><td>$requestLink</td><td>$artifactUrl</td></tr></tbody></table>"
 				'''
 			}
 		} 
