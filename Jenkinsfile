@@ -49,7 +49,7 @@ pipeline {
 
                     // Echo to console
                     echo "releaseNumber: ${releaseNumber} \n requestType: ${requestType} \n	requestLink: ${requestLink} \n artifactUrl: ${artifactUrl} \n envName: ${envName} \n Comment: ${Comment} \n prodDeployment: ${prodDeployment} \n preprodDeployment: ${preprodDeployment} \n icatDeployment: ${icatDeployment}";
-					newRow = "<tr><td><a href=""${artifactUrl}"">"${releaseNumber}"</a></td><td><a href=""${requestLink}"">"${requestType}"</a></td><td>"${envName}"</td><td>"${prodDeployment}"</td><td>"${preprodDeployment}"</td><td>"${icatDeployment}"</td><td>"${timeStamp}"</td><td>"${buildTriggerredBy}"</td><td>"${Comment}"</td></tr></tbody></table>"
+					newRow = ""<tr><td><a href=""${artifactUrl}"">"${releaseNumber}"</a></td><td><a href=""${requestLink}"">"${requestType}"</a></td><td>"${envName}"</td><td>"${prodDeployment}"</td><td>"${preprodDeployment}"</td><td>"${icatDeployment}"</td><td>"${timeStamp}"</td><td>"${buildTriggerredBy}"</td><td>"${Comment}"</td></tr></tbody></table>""
 					echo ${newRow}
                 }
             }
