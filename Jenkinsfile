@@ -19,7 +19,7 @@ pipeline {
 					def preprodDeployment
 					def icatDeployment
 					buildTriggerredBy = currentBuild.getBuildCauses()[0].userId + "-" + currentBuild.getBuildCauses()[0].userName
-					def timeStamp = String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())
+					//def timeStamp = String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now())
 
                     // Get the input
                     def userInput = input(
@@ -51,12 +51,10 @@ pipeline {
                     // Echo to console
                     echo "releaseNumber: ${releaseNumber} \n requestType: ${requestType} \n	requestLink: ${requestLink} \n artifactUrl: ${artifactUrl} \n envName: ${envName} \n Comment: ${Comment} \n prodDeployment: ${prodDeployment} \n preprodDeployment: ${preprodDeployment} \n icatDeployment: ${icatDeployment} \n buildTriggerredBy: ${buildTriggerredBy} \n timeStamp: ${timeStamp}";
 					*/
-					def newRow = "<tr><td><a href="${artifactUrl}""
-					echo ${newRow}
 				}
             }
         }
-/*		
+		
 		stage(Update_Confluence) {
 			steps {
 				sh '''
@@ -70,10 +68,10 @@ pipeline {
 					preprodDeployment="'''+preprodDeployment+'''"
 					icatDeployment="'''+icatDeployment+'''"
 					timeStamp = `TZ=":Asia/Kolkata" date "+%H"%M, %d %b %Y (%:z)"`
-					newRow = 
+					newRow = "<tr><td>$releaseNumber</td><td>$requestType</td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td><td>$requestLink</td><td>$artifactUrl</td></tr></tbody></table>"
 					echo $newRow
 				'''
 			}
-		} */
+		} 
     }
 }
