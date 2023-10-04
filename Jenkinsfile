@@ -19,7 +19,7 @@ pipeline {
 					def preprodDeployment
 					def icatDeployment
 					buildTriggerredBy = currentBuild.getBuildCauses()[0].userId + "-" + currentBuild.getBuildCauses()[0].userName
-					def timeStamp = aDate.format("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'", TimeZone.getTimeZone("IST"))
+					def timeStamp = String.format('%tF %<tH:%<tM', java.time.LocalDateTime.now(), TimeZone.getTimeZone("Asia/Kolkata"))
 
                     // Get the input
                     def userInput = input(
