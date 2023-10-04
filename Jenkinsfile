@@ -9,33 +9,67 @@ pipeline {
                 script {
 
                     // Variables for input
-                    def Column1
-					def Column2
-					def Column3
+                    def releaseNumber
+					def requestType
+					def requestLink
+					def artifactUrl
+					def envName
 					def Comment
-					def Column6
+					def prodDeployment
+					def preprodDeployment
+					def icatDeployment
+					buildTriggerredBy = currentBuild.getBuildCauses()[0].userId + "-" + currentBuild.getBuildCauses()[0].userName
 
                     // Get the input
                     def userInput = input(
                             id: 'userInput', message: 'Enter the values:?',
                             parameters: [
-							string(defaultValue: 'None', description: 'Column1', name: 'Column1'),
-							string(defaultValue: 'None', description: 'Column2', name: 'Column2'), 
-							string(defaultValue: 'None', description: 'Column3', name: 'Column3'),
+							string(defaultValue: 'None', description: 'releaseNumber', name: 'releaseNumber'),
+							choice(choices: ['Major', 'Minor'], description: 'requestType', name: 'requestType'),
+							string(defaultValue: 'None', description: 'requestLink', name: 'requestLink'),
+							string(defaultValue: 'None', description: 'artifactUrl', name: 'artifactUrl'),
+							string(defaultValue: 'None', description: 'envName', name: 'envName'),
 							string(defaultValue: 'None', description: 'Comment', name: 'Comment'),
-							string(defaultValue: 'None', description: 'Column6', name: 'Column6') ] )
+							choice(choices: ['Yes', 'No', 'TBD'], description: 'prodDeployment', name: 'prodDeployment'),
+							choice(choices: ['Yes', 'No', 'TBD'], description: 'preprodDeployment', name: 'preprodDeployment'),
+							choice(choices: ['Yes', 'No', 'TBD'], description: 'icatDeployment', name: 'icatDeployment')
+							] )
 
                     // Save to variables. Default to empty string if not found.
-                    Column1 = userInput.Column1?:''
-                    Column2 = userInput.Column2?:''
-					Column3 = userInput.Column3?:''
+                    releaseNumber = userInput.releaseNumber?:''
+                    requestType = userInput.requestType?:''
+					requestLink = userInput.requestLink?:''
+					artifactUrl = userInput.artifactUrl?:''
+					envName = userInput.envName?:''
                     Comment = userInput.Comment?:''
-					Column6 = userInput.Column6?:''
+					prodDeployment = userInput.prodDeployment?:''
+					preprodDeployment = userInput.preprodDeployment?:''
+					icatDeployment = userInput.icatDeployment?:''
+					
 
                     // Echo to console
-                    echo "Column1: ${Column1} \n Column2: ${Column2} \n Column3: ${Column3} \n Comment: ${Comment} \n Column6: ${Column6}";
+                    echo "releaseNumber: ${releaseNumber} \n requestType: ${requestType} \n	requestLink: ${requestLink} \n artifactUrl: ${artifactUrl} \n envName: ${envName} \n Comment: ${Comment} \n prodDeployment: ${prodDeployment} \n preprodDeployment: ${preprodDeployment} \n icatDeployment: ${icatDeployment}";
                 }
             }
         }
+		
+		stage(Update_Confluence) {
+			steps {
+				sh '''
+					releaseNumber="'''+releaseNumber+'''"
+					requestType="'''+requestType+'''"
+					requestLink="'''+requestLink+'''"
+					artifactUrl="'''+artifactUrl+'''"
+					envName="'''+envName+'''"
+					Comment="'''+Comment+'''"
+					prodDeployment="'''+prodDeployment+'''"
+					preprodDeployment="'''+preprodDeployment+'''"
+					icatDeployment="'''+icatDeployment+'''"
+					timeStamp = `TZ=":Asia/Kolkata" date "+%H"%M, %d %b %Y (%:z)"`
+					newRow = "<tr><td><a href="$artifactUrl">$releaseNumber</a></td><td><a href="$requestLink">$requestType</a></td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td></tr></tbody></table>"
+					echo $newRow
+				'''
+			}
+		}
     }
 }
