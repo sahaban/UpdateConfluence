@@ -1,7 +1,7 @@
 #!/bin/bash
 
-confluenceUser="emv52697@zslsz.com"
-confluencePass="ATATT3xFfGF0XVAIQxYy3gPHll5cr1hb0NhsemeKLYXKgr1e30vQkXKCWnI9CU8vxkQc1tCuTiLL8bXnmnus6jdOa5CGKpdx7iKQ36ek9Q1tifrbqRPzE9LPs6r71Sks2VmQ8v-UOm0K-NAOVoSqhA95zwsP4_rrZU3zN59fry9xqn4ywhMJKPA=32A1FB33"
+confluenceUser="confluence-username"
+confluencePass="confluence-user-passowrd"
 
 #get current whole page content from confluence
 currentContent=`curl -s -u ${confluenceUser}:${confluencePass} -X GET https://blackiron629.atlassian.net/wiki/rest/api/content/33118?expand=body.storage | python3 -c "import sys, json; print json.load(sys.stdin)['body']['storage']['value']"`
