@@ -32,17 +32,18 @@ pipeline {
 					prodDeployment = userInput.prodDeployment?:''
 					preprodDeployment = userInput.preprodDeployment?:''
 					icatDeployment = userInput.icatDeployment?:''
+					buildTriggerredBy = currentBuildCauses()[0].userId + "-" + currentBuildCauses()[0].userName
 					
-					/*
                     // Echo to console
-                    echo "releaseNumber: ${releaseNumber} \n requestType: ${requestType} \n	requestLink: ${requestLink} \n artifactUrl: ${artifactUrl} \n envName: ${envName} \n Comment: ${Comment} \n prodDeployment: ${prodDeployment} \n preprodDeployment: ${preprodDeployment} \n icatDeployment: ${icatDeployment} \n buildTriggerredBy: ${buildTriggerredBy} \n timeStamp: ${timeStamp}";
-					*/
+                    echo "releaseNumber: ${releaseNumber} \n requestType: ${requestType} \n	requestLink: ${requestLink} \n artifactUrl: ${artifactUrl} \n envName: ${envName} \n Comment: ${Comment} \n prodDeployment: ${prodDeployment} \n preprodDeployment: ${preprodDeployment} \n icatDeployment: ${icatDeployment} \n buildTriggerredBy: ${buildTriggerredBy}";
+					
 				}
             }
         }
 		
 		stage(Update_Confluence) {
 			steps {
+				// Accessing the variables defined in groovy and assigning them to shell variables
 				sh '''
 				releaseNumber="'''+releaseNumber+'''"
 				requestType="'''+requestType+'''"
@@ -54,8 +55,11 @@ pipeline {
 				preprodDeployment="'''+preprodDeployment+'''"
 				icatDeployment="'''+icatDeployment+'''"
 				timeStamp=$(date)
-				newRow="<tr><td>$releaseNumber</td><td>$requestType</td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td><td>$requestLink</td><td>$artifactUrl</td></tr></tbody></table>"
-				#echo $newRow
+				
+				//Creating the new row and assigning it to a variable				newRow="<tr><td>$releaseNumber</td><td>$requestType</td><td>$envName</td><td>$prodDeployment</td><td>$preprodDeployment</td><td>$icatDeployment</td><td>$timeStamp</td><td>$buildTriggerredBy</td><td>$Comment</td><td>$requestLink</td><td>$artifactUrl</td></tr></tbody></table>"
+				
+				echo $newRow
+				
 				chmod 755 updateconfluence.sh
 				bash updateconfluence.sh "$newRow"
 				'''

@@ -16,10 +16,12 @@ oldRow="</tbody></table>"
 newRow=$1
 newContent="${currentContent/$oldRow/$newRow}"
 
-pageVersion=`curl -s -u ${confluenceUser}:${confluencePass} -X GET https://blackiron629.atlassian.net/wiki/rest/api/content/33118?expand=version | python3 -c "import sys, json; print (json.load(sys.stdin)['version']['number'])"`
+#Getting the current page version
+currentPageVersion=`curl -s -u ${confluenceUser}:${confluencePass} -X GET https://blackiron629.atlassian.net/wiki/rest/api/content/33118?expand=version | python3 -c "import sys, json; print (json.load(sys.stdin)['version']['number'])"`
 
-pageVersion=`expr $pageVersion + 1`
-echo "pageVersion: ${pageVersion}"
+#Increamenting the page version with +1
+pageVersion=`expr $currentPageVersion + 1`
+echo "New page version is: ${pageVersion}"
 
 #Update the page with new table  row
 curl -s -u ${confluenceUser}:${confluencePass} -X PUT -H 'Content-Type: application/json' -d '{"id":"33118","type":"page","title":"Test Page","body":{"storage":{"value":"'"${newContent//\"/\\\"}"'","representation":"storage"}},"version":{"number":'"${pageVersion}"'}}' https://blackiron629.atlassian.net/wiki/rest/api/content/33118
