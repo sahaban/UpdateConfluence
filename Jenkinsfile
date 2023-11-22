@@ -20,7 +20,7 @@ pipeline {
 							choice(choices: ['Yes', 'No', 'TBD'], description: 'prodDeployment', name: 'prodDeployment'),
 							choice(choices: ['Yes', 'No', 'TBD'], description: 'preprodDeployment', name: 'preprodDeployment'),
 							choice(choices: ['Yes', 'No', 'TBD'], description: 'icatDeployment', name: 'icatDeployment')
-							] ), submitterParameter: 'USER'
+							], submitterParameter: 'USER')
 					echo "Accepted by ${userInput['USER']}"
 
                     // Save to variables. Default to empty string if not found.
